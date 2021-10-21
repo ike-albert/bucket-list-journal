@@ -12,6 +12,7 @@ export const LogInPage = () =>{
     const history = useHistory();
 
     const onLogInClicked = async () => {
+        alert('Log In Clicked');
         const response = await axios.post('/api/login', {
             email: emailValue,
             password: passwordValue,
@@ -32,12 +33,12 @@ export const LogInPage = () =>{
             <input
                 type="password"
                 value={passwordValue}
-                onChange={e => setPasswordValue(e.target.ariaValueMax)}
+                onChange={e => setPasswordValue(e.target.value)}
                 placeholder="password" />
+            <hr/>
             <button
                 disabled={!emailValue || !passwordValue}
                 onClick={onLogInClicked}>Log In</button>
-            <hr/>
             <button onClick={() => history.push('/forgot-password')}>Forgot your password?</button>
             <button onClick={() => history.push('/signup')}>New to Bucket List Journal? Sign Up</button>
 

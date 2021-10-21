@@ -7,7 +7,9 @@ import { useToken } from "../auth/useToken";
 export const SignUpPage = () =>{
     const [token, setToken] = useToken();
     const [errorMessage, setErrorMessage] = useState('');
+
     const [emailValue, setEmailValue] = useState('');
+    const [userNameValue, setuserNameValue] = useState('');
     const [passwordValue, setPasswordValue] = useState('');
     const [confirmPasswordValue, setConfirmPasswordValue] = useState('');
 
@@ -15,18 +17,24 @@ export const SignUpPage = () =>{
 
     const onSignUpClicked = async () => {
         const response = await axios.post('/api/signup', {
+            username: userNameValue,
             email: emailValue,
             password: passwordValue,
         });
-
+        
         const {token} = response.data;
         setToken(token);
         history.push('/'); //Home route
+        alert('Sign Up Clicked');
     }
     return(
         <div className="content=container">
             <h1>Sign Up</h1>
             {errorMessage && <div className="fail">{errorMessage}</div>}
+            <input
+                value={userNameValue}
+                onChange={e => setuserNameValue(e.target.value)}
+                placeholder="username"/>
             <input
                 value={emailValue}
                 onChange={e => setEmailValue(e.target.value)}
@@ -44,7 +52,7 @@ export const SignUpPage = () =>{
             <hr/>
             <button
                 disabled={
-                    !emailValue ||!passwordValue ||
+                    !userNameValue || !emailValue ||!passwordValue||
                     passwordValue !== confirmPasswordValue
                 }
                 onClick={onSignUpClicked}>Sign Up</button>
